@@ -273,6 +273,8 @@ PP_DEFINE(DISCORD_MESSAGE_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD 1 << 8)
 PP_DEFINE(DISCORD_MESSAGE_SUPPRESS_NOTIFICATIONS 1 << 12)
 /** this message is a voice message */
 PP_DEFINE(DISCORD_MESSAGE_IS_VOICE_MESSAGE 1 << 13)
+/** this message is a components v2 utilizing message */
+PP_DEFINE(DISCORD_MESSAGE_HAS_COMPONENTS_V2 1 << 15)
 
 /** @} DiscordAPIChannelMessageFlags */
 
