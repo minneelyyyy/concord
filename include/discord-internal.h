@@ -448,8 +448,8 @@ struct discord_request {
 
     /** the request's bucket */
     struct discord_bucket *b;
-    /** request body handle @note buffer is kept and reused */
-    struct ccord_szbuf_reusable body;
+    /** request body handle */
+    struct ccord_szbuf body;
     /** the request's http method */
     enum http_method method;
     /** the request's endpoint */

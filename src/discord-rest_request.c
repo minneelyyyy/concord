@@ -268,7 +268,9 @@ discord_request_cancel(struct discord_requestor *rqtor,
     if (req->dispatch.data) {
         discord_refcounter_decr(rc, req->dispatch.data);
     }
-
+    if (!req->body.is_static) {
+        free(req->body.start);
+    }
     req->body.size = 0;
     req->method = 0;
     *req->endpoint = '\0';
@@ -605,17 +607,7 @@ discord_request_begin(struct discord_requestor *rqtor,
     CCORDcode code;
 
     req->method = method;
-    if (body) {
-        if (body->size > req->body.realsize) { /* buffer needs a resize */
-            void *tmp = realloc(req->body.start, body->size);
-            ASSERT_S(tmp != NULL, "Out of memory");
-
-            req->body.start = tmp;
-            req->body.realsize = body->size;
-        }
-        memcpy(req->body.start, body->start, body->size);
-        req->body.size = body->size;
-    }
+    if (body) req->body = *body;
     memcpy(req->endpoint, endpoint, sizeof(req->endpoint));
     memcpy(req->key, key, sizeof(req->key));
 
