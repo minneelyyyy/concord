@@ -153,7 +153,10 @@ discord_config_init(const char config_file[])
     if (field.size && 0 != strncmp("YOUR-BOT-TOKEN", field.start, field.size))
         cog_strndup(field.start, field.size, &new_client->token);
 
-    _discord_init(new_client);
+    if (_discord_init(new_client) != CCORD_OK) {
+        discord_cleanup(new_client);
+        return NULL;
+    }
 
     /* check for default prefix in config file */
     field = discord_config_get_field(
